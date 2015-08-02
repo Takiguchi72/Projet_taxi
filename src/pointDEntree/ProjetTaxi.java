@@ -103,5 +103,6 @@ public class ProjetTaxi {
 		} catch (Exception ex) {
 			System.out.println("\n/!\\ Une erreur est survenue lors du calcul du total :\n" + ex.getMessage());
 		}
+		Saisies.fermerScanner();
 	}//fin main
 }//fin classe

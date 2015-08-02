@@ -135,4 +135,12 @@ public class Saisies {
 		
 		return distanceSaisie;
 	}//fin saisirDistance
+	
+	/**
+	 * Ferme le scanner
+	 */
+	public static void fermerScanner()
+	{
+		scanner.close();
+	}
 }//fin classe
