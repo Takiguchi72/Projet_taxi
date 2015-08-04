@@ -1,7 +1,6 @@
 package classes;
 
 import java.util.Scanner;
-import pointDEntree.ProjetTaxi;
 
 public class Saisies {
 	protected static final String PERIODES[] = {"Semaine - Jour",
@@ -12,6 +11,9 @@ public class Saisies {
 	protected static final String INTITULE_DISTANCE 	= "\nSaisissez la distance que vous avez parcouru :";
 	protected static Scanner scanner = new Scanner(System.in);
 	
+	/**
+	 * Affiche les périodes disponibles
+	 */
 	public static void afficherPeriodes()
 	{
 		System.out.println("\nSaisissez le numéro correspondant à la période choisie :");
@@ -48,7 +50,6 @@ public class Saisies {
 	public static int saisirDepartement()
 	{
 		int departementSaisi = 0;
-		boolean departementDansLaListe = false;
 		
 		//On affiche le texte
 		System.out.println(INTITULE_DEPARTEMENT);
@@ -56,22 +57,8 @@ public class Saisies {
 		try {
 			departementSaisi = saisirUnEntier();	//On effectue une saisie
 			
-			//On parcourt le tableau de département pour savoir si le département saisi est présent dans le tableau
-			for(int i = 0 ; i < ProjetTaxi.DEPARTEMENTS.length ; i++)
-			{
-				//Si le département saisi est dans le tableau, on met un booléen à "true", et on arrête la boucle
-				if(departementSaisi == ProjetTaxi.DEPARTEMENTS[i])
-				{
-					departementDansLaListe = true;
-					break;
-				}
-			}
-			
-			//Si après avoir parcouru le tableau des départements pris en charges, celui saisit n'y est pas présent, on lève une exception
-			if(departementDansLaListe == false)
-			{
-				throw new Exception("\n/!\\ Le département saisi n'est pas prit en charge.");
-			}
+			//On récupère l'indice du département saisi
+			GestionFichier.verifierDepartement(departementSaisi);
 		} catch (Exception ex) {
 			//Si une exception a été levée, on affiche le message d'erreur, et on réeffectue la saisie.
 			System.out.println(ex.getMessage());
