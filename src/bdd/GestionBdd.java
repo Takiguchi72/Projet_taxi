@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GestionBdd {
 	public static Connection connexion = getInstance();
@@ -77,6 +79,33 @@ public class GestionBdd {
 		// Si aucune exception n'est levée, c'est que le département passé en
 		// paramètre figure dans la base de données
 	}// fin verifierDepartement
+	
+	public static List<String> getDepartements() throws Exception
+	{
+		List<String> listeDepartements = new ArrayList<String>();
+		
+		try {
+			PreparedStatement prepare = connexion.prepareStatement( "SELECT departement FROM \"Projet_taxi\".tarif" );
+			
+			ResultSet result = prepare.executeQuery(); // On exécute la requête
+			
+			// Pour chaque département retourné par la bdd, on ajoute le
+			// département à la liste
+			while ( result.next() )
+			{
+				listeDepartements.add( result.getString( "departement" ) );
+			}
+		} catch ( Exception ex ) {
+			System.err.println( "Une erreur est survenue lors de l'exécution de la requête :\n" + ex.getMessage() );
+		}
+		
+		if ( listeDepartements.size() == 0 )
+		{
+			throw new Exception( "Aucun département n'a été retourné par la base de données !" );
+		}
+		
+		return listeDepartements;
+	}
 	
 	/**
 	 * Retourne la prise en charge et le tarif kilométrique, en fonction de
